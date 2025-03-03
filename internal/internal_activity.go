@@ -63,6 +63,7 @@ type (
 	// ExecuteActivityOptions option for executing an activity
 	ExecuteActivityOptions struct {
 		ActivityID             string // Users can choose IDs but our framework makes it optional to decrease the crust.
+		Name                   string
 		TaskQueueName          string
 		ScheduleToCloseTimeout time.Duration
 		ScheduleToStartTimeout time.Duration
