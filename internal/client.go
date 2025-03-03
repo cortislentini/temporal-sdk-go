@@ -660,6 +660,8 @@ type (
 		// server will start new workflow execution if needed based on the retry policy.
 		RetryPolicy *RetryPolicy
 
+		Name string
+
 		// CronSchedule - Optional cron schedule for workflow. If a cron schedule is specified, the workflow will run
 		// as a cron based on the schedule. The scheduling will be based on UTC time. Schedule for next run only happen
 		// after the current run is completed/failed/timeout. If a RetryPolicy is also supplied, and the workflow failed
