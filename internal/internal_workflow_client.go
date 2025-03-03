@@ -1605,9 +1605,16 @@ func createStartWorkflowInput(
 	if err := validateFunctionArgs(workflow, args, true); err != nil {
 		return nil, err
 	}
-	workflowType, err := getWorkflowFunctionName(registry, workflow)
-	if err != nil {
-		return nil, err
+
+	var workflowType string
+	if options.Name != "" {
+		workflowType = options.Name
+	} else {
+		var err error
+		workflowType, err = getWorkflowFunctionName(registry, workflow)
+		if err != nil {
+			return nil, err
+		}
 	}
 	return &ClientExecuteWorkflowInput{
 		Options:      &options,
