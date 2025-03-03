@@ -828,8 +828,16 @@ func (wc *workflowEnvironmentInterceptor) Init(outbound WorkflowOutboundIntercep
 func ExecuteActivity(ctx Context, activity interface{}, args ...interface{}) Future {
 	assertNotInReadOnlyState(ctx)
 	i := getWorkflowOutboundInterceptor(ctx)
+	var activityType string
+	eap := ctx.Value(activityOptionsContextKey)
 	registry := getRegistryFromWorkflowContext(ctx)
-	activityType := getActivityFunctionName(registry, activity)
+	activityType = getActivityFunctionName(registry, activity)
+	if eap != nil {
+		eapV := eap.(*ExecuteActivityOptions)
+		if eapV.Name != "" {
+			activityType = eapV.Name
+		}
+	}
 	// Put header on context before executing
 	ctx = workflowContextWithNewHeader(ctx)
 	return i.ExecuteActivity(ctx, activityType, args...)
@@ -2341,6 +2349,7 @@ func WithActivityOptions(ctx Context, options ActivityOptions) Context {
 	eap.HeartbeatTimeout = options.HeartbeatTimeout
 	eap.WaitForCancellation = options.WaitForCancellation
 	eap.ActivityID = options.ActivityID
+	eap.Name = options.Name
 	eap.RetryPolicy = convertToPBRetryPolicy(options.RetryPolicy)
 	eap.DisableEagerExecution = options.DisableEagerExecution
 	eap.VersioningIntent = options.VersioningIntent
