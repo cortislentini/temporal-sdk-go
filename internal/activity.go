@@ -132,6 +132,8 @@ type (
 		// Optional: default empty string
 		ActivityID string
 
+		Name string
+
 		// RetryPolicy - Specifies how to retry an Activity if an error occurs.
 		// More details are available at docs.temporal.io.
 		// RetryPolicy is optional. If one is not specified, a default RetryPolicy is provided by the server.
