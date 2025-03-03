@@ -1,7 +1,5 @@
 module go.temporal.io/sdk
 
-replace go.temporal.io/sdk v1.33.0 => github.com/cortislentini/temporal-sdk-go v1.33.0
-
 go 1.21
 
 toolchain go1.21.1
